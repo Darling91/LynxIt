@@ -3,7 +3,7 @@
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-	<VBox class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroupObject">
+	<VBox class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
 		<f:Form editable="false">
 			<f:title>
 				<core:Title text="{i18n>ttlChangebleInfo}" />
@@ -33,7 +33,7 @@
 								id="iMaterialTextForm"
                                 value="{path: 'MaterialText',type:'sap.ui.model.odata.type.String', constraints:{nullable: false}}" 
 								change="onChangeMaterialText" 
-								fieldGroupIds="input"
+								fieldGroupIds="formInput"
 								maxLength="128"
 								width= "250px"
                                 valueLiveUpdate="true"/>
@@ -47,8 +47,7 @@
 								maxLength="256"
 								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialDescription} === '' || undefined || null}"
 								width= "250px"
-                                valueLiveUpdate="true"
-								fieldGroupIds="input"/>
+                                valueLiveUpdate="true"/>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
@@ -61,7 +60,7 @@
 									forceSelection="false"
 									selectedKey="{GroupID}"
 									width="250px"
-									fieldGroupIds="comboBox"
+									fieldGroupIds="formComboBox"
 									items="{
 										path: '/zjblessons_base_Groups',
 										sorter:{
@@ -87,7 +86,7 @@
 									forceSelection="false"
 									selectedKey="{SubGroupID}"
 									width="250px"
-									fieldGroupIds="comboBox"
+									fieldGroupIds="formComboBox"
 									items="{
 										path: '/zjblessons_base_SubGroups',
 										sorter:{
@@ -113,7 +112,7 @@
 									forceSelection="false"
 									selectedKey="{Rating}"
 									width="250px"
-									fieldGroupIds="comboBox"
+									fieldGroupIds="formComboBox"
 									items="{
 										path: '/zjblessons_base_Materials',
 										sorter:{

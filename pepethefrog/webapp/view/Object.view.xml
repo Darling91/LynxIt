@@ -36,7 +36,7 @@
 				id="iconTabBar"
 				headerMode="Inline"
 				select="onSelectIconTabBar"
-				validateFieldGroup="onValidateFieldGroupObject">
+				validateFieldGroup="onValidateFieldGroup">
 				<items>
 					<IconTabFilter
 						text="{i18n>ttlObjectList}"
@@ -136,7 +136,7 @@
 								maxLength="128"
 								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialText} === '' || undefined || null}"
 								width= "20em"
-								fieldGroupIds="input"
+								fieldGroupIds="listInput"
 								/>
 							</InputListItem>
 							<InputListItem 
@@ -149,7 +149,6 @@
 								maxLength="256"
 								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialDescription} === '' || undefined || null}"
 								width= "20em"
-								fieldGroupIds="input"
 								/>
 							</InputListItem>
 							<InputListItem 
@@ -161,7 +160,7 @@
 									forceSelection="false"
 									selectedKey="{Rating}"
 									width="15em"
-									fieldGroupIds="comboBox"
+									fieldGroupIds="listComboBox"
 									items="{
 										path: '/zjblessons_base_Materials',
 										sorter:{
@@ -190,7 +189,7 @@
 									forceSelection="false"
 									selectedKey="{GroupID}"
 									width="15em"
-									fieldGroupIds="comboBox"/>
+									fieldGroupIds="listComboBox"/>
 									<!-- items="{
 										path: '/zjblessons_base_Groups',
 										sorter:{
@@ -218,7 +217,7 @@
 									forceSelection="false"
 									selectedKey="{SubGroupID}"
 									width="15em"
-									fieldGroupIds="comboBox"/>
+									fieldGroupIds="listComboBox"/>
 									<!-- items="{
 										path: '/zjblessons_base_SubGroups',
 										sorter:{

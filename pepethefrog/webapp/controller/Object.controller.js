@@ -36,7 +36,7 @@ sap.ui.define([
 						delay : 0,
 						editMode :false,
 						selectedKeyITB: "list",
-						validateError : false
+						validateError : false,
 					});
 					this.setModel(oViewModel, "objectView");
 
@@ -120,29 +120,46 @@ sap.ui.define([
 
 			onPressEditMaterial: function(){
 				this._setEditMode(true);
+				this._clearValidateCreate();
 			},
 
-			_validateSaveMaterial: function(){
-				[
-					Fragment.byId("this.getView().getId()", "iMaterialTextForm"),
-					Fragment.byId("this.getView().getId()", "iMaterialDescriptionForm"),
-					Fragment.byId("this.getView().getId()", "cbSubGroup"),
-					Fragment.byId("this.getView().getId()", "cbRating"),	
-				].forEach(oControl => {
-					oControl.fireValidateFieldGroup();
-				})
-			},
 
 			onPressSaveMaterial: function(){
-				this.getModel().submitChanges();
-				this._setEditMode(false);
+				this._validateSaveMaterial();
+
+				if (this.getModel().hasPendingChanges() || !this.getModel("objectView").getProperty("/validateError")) {
+					this.getModel().submitChanges();
+					this._setEditMode(false);
+				}
+				// this.getModel().submitChanges();
+				// this._setEditMode(false);
 			},
 
 			onPressCancelMaterial: function(){
+				this._clearValidateCreateMaterial();
+				this.getModel("objectView").setProperty("/validateError", false);
 				this.getModel().resetChanges();
 				this._setEditMode(false);
 			},
 
+			_validateSaveMaterial: function() {
+				const aFieldsIds = this.getView().getControlsByFieldGroupId();
+				aFieldsIds.forEach((oControl) => {
+					if(oControl.mProperties.fieldGroupIds[0]){
+						oControl.fireValidateFieldGroup()
+					}
+				})
+			},
+
+			_clearValidateCreate: function () {
+				const aFieldsIds = this.getView().getControlsByFieldGroupId();
+				aFieldsIds.forEach((oControl) => {
+					if(oControl.mProperties.fieldGroupIds[0]){
+						oControl.setValueState('None')
+						oControl.setValueStateText(' ')
+					}
+				});
+			},
 			
 
 			onChange: function(oEvent){
@@ -291,23 +308,31 @@ sap.ui.define([
 					}
 				},
 
-				onValidateFieldGroupObject: function(oEvent){
+				onValidateFieldGroup: function(oEvent) {
 					const oControl = oEvent.getSource();
-					let sSuccess = true;
-					let sErrorText;
-					switch(oControl.getFieldGroupIds()[0]){
-						case "input":
-							sSuccess = !!oControl.getValue();
-							sErrorText = "Enter Text";
+					const sSelectedKey = this.getModel("objectView").getProperty("/selectedKeyITB");
+	
+					let bSuccess = true;
+	
+					switch (oControl.getFieldGroupIds()[0]) {
+						case sSelectedKey === "list" ? "listInput" : "formInput":
+							bSuccess = !!oControl.getValue();
 							break;
-						case "comboBox":
-							sSuccess = oControl.getItems().includes(oControl.getSelectedItem());
-							sErrorText = "Select Value";
+	
+						case sSelectedKey === "list" ? "listComboBox" : "formComboBox":
+							bSuccess = oControl.getItems().includes(oControl.getSelectedItem());
+							break;
+					
+						default:
+							break;
 					}
-					this.getModel("objectView").setProperty("/validateError", !sSuccess);
-					oControl.setValueState(sSuccess ? "None" : "Error");
-					oControl.setValueStateText(sErrorText);
-				},
+					this.getModel("objectView").setProperty("/validateError", !bSuccess);
+	
+					oControl.setValueState(bSuccess ? "None" : "Error");
+					oControl.setValueStateText(sErrorText); 
+				}
+	
 			});
+	
 		}
 );
