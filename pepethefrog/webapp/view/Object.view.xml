@@ -18,18 +18,18 @@
 			<Title text="{MaterialText}"/>
 		</semantic:titleHeading>
 
-		<semantic:editAction>
+		<!-- <semantic:editAction>
 			<semantic:EditAction
 				press="onPressEditMaterial"/>
-		</semantic:editAction>
+		</semantic:editAction> -->
 
-		 <semantic:saveAsTileAction>
+		 <!-- <semantic:saveAsTileAction>
 			<Button
 				press="onPressSaveMaterial"
 				icon="{i18n>iSave}"
 				tooltip="{i18n>btnSave}"
 				type="Emphasized"/>
-		</semantic:saveAsTileAction> 
+		</semantic:saveAsTileAction>  -->
 
 		<semantic:content>
 			<IconTabBar 
@@ -60,32 +60,28 @@
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>lMaterialDescription}" 
-								visible="{= !${objectView>/editMode}}"
-								fieldGroupIds="input">
+								visible="{= !${objectView>/editMode}}">
 								<Text 
 								text="{MaterialDescription}" 
 								visible="{= !${objectView>/editMode}}"/>
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>Rating}" 
-								visible="{= !${objectView>/editMode}}"
-								fieldGroupIds="input">
+								visible="{= !${objectView>/editMode}}">
 								<Text 
 								text="{Rating}" 
 								visible="{= !${objectView>/editMode}}"/>
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>lGroupText}" 
-								visible="{= !${objectView>/editMode}}"
-								fieldGroupIds="comboBox">
+								visible="{= !${objectView>/editMode}}">
 								<Text 
 									text="{GroupText}" 
 									visible="{= !${objectView>/editMode}}"/>
 							</InputListItem>
 							<InputListItem 
-								label="{i18n>lSubGroupText}" 
-								visible="{= !${objectView>/editMode}}"
-								fieldGroupIds="comboBox">
+								label="{i18n>lSubGroupText}"
+								visible="{= !${objectView>/editMode}}">
 								<Text 
 									text="{SubGroupText}" 
 									visible="{= !${objectView>/editMode}}"/>
@@ -125,116 +121,68 @@
 								visible="{= !${objectView>/editMode}}"/>
 							</InputListItem>
 
+
+
+
+
 							<InputListItem 
 								label="{i18n>lTableNameColumnTitle}"
 								visible="{objectView>/editMode}"
 								>
 								<Input
-								id="iMaterialTextEdit"
-								value="{path:'MaterialText',type:'sap.ui.model.odata.type.String', constraints:{nullable: false}}" 
-								change="onChangeMaterialTexts" 
-								maxLength="128"
-								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialText} === '' || undefined || null}"
-								width= "20em"
-								fieldGroupIds="listInput"
-								/>
+								value="{path: 'MaterialText', type: 'sap.ui.model.odata.type.String'}"
+									fieldGroupIds="listInput"
+									maxLength="128" 
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialText} !== '' || undefined || null}"
+									width="20em"
+									required="true"/>
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>lMaterialDescription}" 
 								visible="{objectView>/editMode}"
 								>
 								<Input 
-								id="iMaterialDescriptionEdit"
-								value="{MaterialDescription}"
-								maxLength="256"
-								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialDescription} === '' || undefined || null}"
-								width= "20em"
-								/>
+									value="{MaterialDescription}"
+									maxLength="256" 
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${MaterialDescription} !== '' || undefined || null}"
+									width="20em"/>
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>Rating}" 
-								visible="{objectView>/editMode}"
-								>
-								<ComboBox
-									id="ratingSelect"
-									forceSelection="false"
-									selectedKey="{Rating}"
-									width="15em"
-									fieldGroupIds="listComboBox"
-									items="{
-										path: '/zjblessons_base_Materials',
-										sorter:{
-											path: 'Rating',
-											descending: true
-										},
-										filters: [{
-											path: 'Rating',
-											operator: 'NE',
-											value1: null
-										}]
-									}" 
-								>
-									<core:Item
-										key="{Rating}"
-										text="{Rating}"/>
-								</ComboBox>
+								visible="{objectView>/editMode}">
+								<Input
+									value="{
+                    					path: 'Rating', 
+                    					type: 'sap.ui.model.odata.type.Decimal', 
+                    					constraints: {precision: '3', scale: '2'}
+                					}" 
+									fieldGroupIds="listInput"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
+									width="20em"
+									required="true"/>
 						
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>lGroupText}" 
-								visible="{objectView>/editMode}"
-								>
+								visible="{objectView>/editMode}">
 								<ComboBox
 									id="groupSelect"
 									forceSelection="false"
 									selectedKey="{GroupID}"
 									width="15em"
-									fieldGroupIds="listComboBox"/>
-									<!-- items="{
-										path: '/zjblessons_base_Groups',
-										sorter:{
-											path: 'GroupText',
-											descending: true
-										},
-										filters: [{
-											path: 'GroupText',
-											operator: 'NE',
-											value1: null
-										}]
-									}" 
-								>
-									<core:Item
-										key="{GroupID}"
-										text="{GroupText}"/>
-								</Select> -->
+									fieldGroupIds="listComboBox"
+									required="true"/>
 							</InputListItem>
 							<InputListItem 
 								label="{i18n>lSubGroupText}" 
-								visible="{objectView>/editMode}"
-								>
+								visible="{objectView>/editMode}">
 								<ComboBox
 									id="subGroupSelect"
 									forceSelection="false"
 									selectedKey="{SubGroupID}"
 									width="15em"
-									fieldGroupIds="listComboBox"/>
-									<!-- items="{
-										path: '/zjblessons_base_SubGroups',
-										sorter:{
-											path: 'SubGroupText',
-											descending: true
-										},
-										filters: [{
-											path: 'SubGroupText',
-											operator: 'NE',
-											value1: null
-										}]
-									}" 
-								>
-									<core:Item
-										key="{SubGroupID}"
-										text="{SubGroupText}"/>  -->
-								<!-- </Select> -->
+									fieldGroupIds="listComboBox"
+									required="true"/>
 							</InputListItem>
 							<InputListItem label="{i18n>lCreated}" visible="{objectView>/editMode}">
 								<Text text="{path: 'Created',
@@ -289,7 +237,7 @@
 			press="onPressCancelMaterial"
 		/>
 		<Button
-			visible="{objectView>/editMode}"
+			visible="{!objectView>/editMode}"
 			icon="{i18n>iEdit}"
 			text="{i18n>btnEdit}"
 			press="onPressEditMaterial"

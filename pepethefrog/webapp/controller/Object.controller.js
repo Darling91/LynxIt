@@ -126,17 +126,16 @@ sap.ui.define([
 
 			onPressSaveMaterial: function(){
 				this._validateSaveMaterial();
-
 				if (this.getModel().hasPendingChanges() || !this.getModel("objectView").getProperty("/validateError")) {
-					this.getModel().submitChanges();
-					this._setEditMode(false);
+					// this.getModel().submitChanges();
+					// this._setEditMode(false);
 				}
-				// this.getModel().submitChanges();
-				// this._setEditMode(false);
+				this.getModel().submitChanges();
+				this._setEditMode(false);
 			},
 
 			onPressCancelMaterial: function(){
-				this._clearValidateCreateMaterial();
+				this._clearValidateCreate();
 				this.getModel("objectView").setProperty("/validateError", false);
 				this.getModel().resetChanges();
 				this._setEditMode(false);
@@ -155,8 +154,8 @@ sap.ui.define([
 				const aFieldsIds = this.getView().getControlsByFieldGroupId();
 				aFieldsIds.forEach((oControl) => {
 					if(oControl.mProperties.fieldGroupIds[0]){
-						oControl.setValueState('None')
-						oControl.setValueStateText(' ')
+						oControl.setValueState("None");
+						oControl.setValueStateText("");
 					}
 				});
 			},
@@ -301,12 +300,6 @@ sap.ui.define([
 
 				//Validation
 
-				onChangeMaterialTexts:function(oEvent){
-					const oSource = oEvent.getSource();
-					if(!oSource.getValue()){
-						oSource.setValueState("Error");	
-					}
-				},
 
 				onValidateFieldGroup: function(oEvent) {
 					const oControl = oEvent.getSource();
@@ -329,7 +322,6 @@ sap.ui.define([
 					this.getModel("objectView").setProperty("/validateError", !bSuccess);
 	
 					oControl.setValueState(bSuccess ? "None" : "Error");
-					oControl.setValueStateText(sErrorText); 
 				}
 	
 			});

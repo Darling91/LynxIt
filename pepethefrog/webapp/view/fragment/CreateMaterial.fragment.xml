@@ -39,17 +39,17 @@
         </ComboBox>
         <Label
             text="{i18n>Rating}:" required="true"/>    
-        <ComboBox
+        <Input
             id="cbRating"
             width="100%"
             selectedKey="{Rating}"
-            fieldGroupIds="comboBox"
+            fieldGroupIds="input"
             items="{path: '/zjblessons_base_Materials',
                 sorter: {path: 'Rating'}}">
                 <core:Item
                     key="{Rating}"
                     text="{Rating}"/>
-        </ComboBox>
+        </Input>
         <Label
             text="{i18n>ttlMaterialDescription}" />
         <TextArea

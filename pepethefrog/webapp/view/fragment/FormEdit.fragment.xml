@@ -27,7 +27,7 @@
 			<f:formContainers>
 				<f:FormContainer title="{i18n>ttlText}">
 					<f:formElements>
-						<f:FormElement label="{i18n>ttlMaterialText}">
+						<f:FormElement label="{i18n>ttlMaterialText}" required="true">
 							<f:fields>
 								<Input 
 								id="iMaterialTextForm"
@@ -36,7 +36,8 @@
 								fieldGroupIds="formInput"
 								maxLength="128"
 								width= "250px"
-                                valueLiveUpdate="true"/>
+                                valueLiveUpdate="true"
+								required="true"/>
 							</f:fields>
 						</f:FormElement>
 						<f:FormElement label="{i18n>lMaterialDescription}">
@@ -52,9 +53,9 @@
 						</f:FormElement>
 					</f:formElements>
 				</f:FormContainer>
-				<f:FormContainer title="{i18n>lGroups}">
+				<f:FormContainer title="{i18n>lGroups}" >
 					<f:formElements>
-						<f:FormElement label="GroupText">
+						<f:FormElement label="GroupText" required="true">
 							<f:fields>
 								<ComboBox
 									forceSelection="false"
@@ -80,7 +81,7 @@
 								</ComboBox>
 							</f:fields>
 						</f:FormElement>
-						<f:FormElement label="{i18n>lSubGroups}">
+						<f:FormElement label="{i18n>lSubGroups}" required="true">
 							<f:fields>
 								<ComboBox
 									forceSelection="false"
@@ -108,28 +109,18 @@
 						</f:FormElement>
 						<f:FormElement label="{i18n>Rating}">
 							<f:fields>
-								<ComboBox
-									forceSelection="false"
-									selectedKey="{Rating}"
-									width="250px"
-									fieldGroupIds="formComboBox"
-									items="{
-										path: '/zjblessons_base_Materials',
-										sorter:{
-											path: 'Rating',
-											descending: true
-										},
-										filters: [{
-											path: 'Rating',
-											operator: 'NE',
-											value1: null
-										}]
-									}" 
-								>
-									<core:Item
-										key="{Rating}"
-										text="{Rating}"/> 
-								</ComboBox>
+								<Input
+										value="{
+                    					path: 'Rating', 
+                    					type: 'sap.ui.model.odata.type.Decimal', 
+                    					constraints: {precision: '3', scale: '2'}
+                					}" 
+									fieldGroupIds="formInput"
+                                    width="250px"
+                                    valueLiveUpdate="true"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
+									required="true">
+								</Input>
 							</f:fields>
 						</f:FormElement>
 					</f:formElements>
