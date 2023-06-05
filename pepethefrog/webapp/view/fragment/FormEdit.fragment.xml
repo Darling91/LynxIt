@@ -1,0 +1,186 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
+		<f:Form editable="false">
+			<f:title>
+				<core:Title text="{i18n>ttlChangebleInfo}" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="12"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="2"
+					columnsM="1"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="{i18n>ttlText}">
+					<f:formElements>
+						<f:FormElement label="{i18n>ttlMaterialText}" required="true">
+							<f:fields>
+								<Input 
+								id="iMaterialTextForm"
+                                value="{path: 'MaterialText',type:'sap.ui.model.odata.type.String', constraints:{nullable: false}}" 
+								change="onChangeMaterialText" 
+								fieldGroupIds="formInput"
+								maxLength="128"
+								width= "250px"
+                                valueLiveUpdate="true"
+								required="true"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>lMaterialDescription}">
+							<f:fields>
+								<Input 
+								id="iMaterialDescriptionForm"
+                                value="{MaterialDescription}"
+								maxLength="256"
+								enabled = "{= ${objectView>/editMode} &amp;&amp; ${MaterialDescription} === '' || undefined || null}"
+								width= "250px"
+                                valueLiveUpdate="true"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+				<f:FormContainer title="{i18n>lGroups}" >
+					<f:formElements>
+						<f:FormElement label="GroupText" required="true">
+							<f:fields>
+								<ComboBox
+									forceSelection="false"
+									selectedKey="{GroupID}"
+									width="250px"
+									fieldGroupIds="formComboBox"
+									items="{
+										path: '/zjblessons_base_Groups',
+										sorter:{
+											path: 'GroupText',
+											descending: true
+										},
+										filters: [{
+											path: 'GroupText',
+											operator: 'NE',
+											value1: null
+										}]
+									}" 
+								>
+									<core:Item
+										key="{GroupID}"
+										text="{GroupText}"/>
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>lSubGroups}" required="true">
+							<f:fields>
+								<ComboBox
+									forceSelection="false"
+									selectedKey="{SubGroupID}"
+									width="250px"
+									fieldGroupIds="formComboBox"
+									items="{
+										path: '/zjblessons_base_SubGroups',
+										sorter:{
+											path: 'SubGroupText',
+											descending: true
+										},
+										filters: [{
+											path: 'SubGroupText',
+											operator: 'NE',
+											value1: null
+										}]
+									}" 
+								>
+									<core:Item
+										key="{SubGroupID}"
+										text="{SubGroupText}"/> 
+								</ComboBox>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>Rating}">
+							<f:fields>
+								<Input
+										value="{
+                    					path: 'Rating', 
+                    					type: 'sap.ui.model.odata.type.Decimal', 
+                    					constraints: {precision: '3', scale: '2'}
+                					}" 
+									fieldGroupIds="formInput"
+                                    width="250px"
+                                    valueLiveUpdate="true"
+									enabled="{= !${objectView>/editMode} &amp;&amp; ${Rating} !== '' || undefined || null}"
+									required="true">
+								</Input>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+		<f:Form editable="true">
+			<f:title>
+				<core:Title text="More" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="12"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="2"
+					columnsL="2"
+					columnsM="1"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer title="{i18n>ttlCreationInfo}">
+					<f:formElements>
+						<f:FormElement label="{i18n>lCreated}">
+							<f:fields>
+								<Text  text="{path: 'Created',
+								type: 'sap.ui.model.type.DateTime',
+								formatOptions:{
+									style: 'long'
+								}}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>ttlCreatedBy}">
+							<f:fields>
+								<Text text="{CreatedByFullName}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="{i18n>lTableModified  }">
+							<f:fields>
+								<Text text="{path: 'Modified',
+								type: 'sap.ui.model.type.DateTime',
+								formatOptions:{
+									style: 'medium'
+								}}"/>
+							</f:fields>
+						</f:FormElement>
+                        <f:FormElement label="{i18n>ttlModifiedBy}">
+							<f:fields>
+								<Text text="{ModifiedByFullName}" />
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	</VBox>
+</core:FragmentDefinition>

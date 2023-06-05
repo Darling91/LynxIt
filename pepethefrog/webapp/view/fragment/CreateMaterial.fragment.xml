@@ -1,0 +1,81 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Dialog
+        title="{i18n>ttlCreateMaterial}" 
+        draggable="true" resizable="true" 
+        contentHeight="{worklistView>/dialogParams/height}" 
+        contentWidth="{worklistView>/dialogParams/width}"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseDialog">
+        <VBox
+            class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
+            <Label
+                text="{i18n>ttlMaterialText}:" required="true"/>
+             <Input
+                value="{path:'MaterialText', type:'sap.ui.model.odata.type.String', constraints:{nullable: false}}" change="onChangeMaterialText" maxLength="128"
+                fieldGroupIds="input" id="iMaterialText"/>
+
+         <Label
+            text="{i18n>ttlGroup}:" required="true"/>
+        <ComboBox
+            id="cbGroup"
+            width="100%"
+            selectedKey="{GroupID}"
+            fieldGroupIds="comboBox"
+            items="{path: '/zjblessons_base_Groups',
+                sorter: {path: 'GroupText'}}">
+                <core:Item
+                    key="{GroupID}"
+                    text="{GroupText}"/>
+        </ComboBox>
+         <Label
+            text="{i18n>ttlSubGroup}:" required="true"/>    
+        <ComboBox
+            id="cbSubGroup"
+            width="100%"
+            selectedKey="{SubGroupID}"
+            fieldGroupIds="comboBox"
+            items="{path: '/zjblessons_base_SubGroups',
+                sorter: {path: 'SubGroupText'}}">
+                <core:Item
+                    key="{SubGroupID}"
+                    text="{SubGroupText}"/>
+        </ComboBox>
+        <Label
+            text="{i18n>Rating}:" required="true"/>    
+        <Input
+            id="cbRating"
+            width="100%"
+            selectedKey="{Rating}"
+            fieldGroupIds="input"
+            items="{path: '/zjblessons_base_Materials',
+                sorter: {path: 'Rating'}}">
+                <core:Item
+                    key="{Rating}"
+                    text="{Rating}"/>
+        </Input>
+        <Label
+            text="{i18n>ttlMaterialDescription}" />
+        <TextArea
+            id="iMaterialDescription"
+            width="100%"
+            value="{MaterialDescription}"
+            maxLength="256"
+            height="10em"/>
+        </VBox>
+        <beginButton>
+            <Button
+            text="{i18n>btnSave}"
+            type="Emphasized"
+            press="onPressSaveMaterial"/>
+        </beginButton>
+        <endButton>
+            <Button
+            text="{i18n>btnClose}"
+            type="Emphasized"
+            press="onPressCloseCreateDialog"/>
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>
