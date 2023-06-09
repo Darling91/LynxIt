@@ -127,11 +127,11 @@ sap.ui.define([
 			onPressSaveMaterial: function(){
 				this._validateSaveMaterial();
 				if (this.getModel().hasPendingChanges() || !this.getModel("objectView").getProperty("/validateError")) {
-					// this.getModel().submitChanges();
-					// this._setEditMode(false);
+					this.getModel().submitChanges();
+					this._setEditMode(false);
 				}
-				this.getModel().submitChanges();
-				this._setEditMode(false);
+				// this.getModel().submitChanges();
+				// this._setEditMode(false);
 			},
 
 			onPressCancelMaterial: function(){
@@ -154,8 +154,8 @@ sap.ui.define([
 				const aFieldsIds = this.getView().getControlsByFieldGroupId();
 				aFieldsIds.forEach((oControl) => {
 					if(oControl.mProperties.fieldGroupIds[0]){
-						oControl.setValueState("None");
-						oControl.setValueStateText("");
+						oControl.setValueState('None');
+						oControl.setValueStateText('');
 					}
 				});
 			},

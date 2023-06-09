@@ -2,7 +2,12 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m">
     <Dialog
-        title="{i18n>ttlCreateMaterial}">
+        title="{i18n>ttlCreateMaterial}" 
+        draggable="true" resizable="true" 
+        contentHeight="{worklistView>/dialogParams/height}" 
+        contentWidth="{worklistView>/dialogParams/width}"
+        class="sapUiSizeCompact"
+        beforeClose="onBeforeCloseDialog">
         <VBox
             class="sapUiSmallMargin" validateFieldGroup="onValidateFieldGroup">
             <Label
@@ -38,18 +43,16 @@
                     text="{SubGroupText}"/>
         </ComboBox>
         <Label
-            text="{i18n>Rating}:" required="true"/>    
-        <Input
-            id="cbRating"
-            width="100%"
-            selectedKey="{Rating}"
-            fieldGroupIds="input"
-            items="{path: '/zjblessons_base_Materials',
-                sorter: {path: 'Rating'}}">
-                <core:Item
-                    key="{Rating}"
-                    text="{Rating}"/>
-        </Input>
+                required="true"
+                text="{i18n>ttlRating}:"/>
+            <Input
+                id="iRating"
+                value="{
+                    path: 'Rating', 
+                    type: 'sap.ui.model.odata.type.Decimal', 
+                    constraints: {precision: '3', scale: '2'}
+                }"
+                fieldGroupIds="input"/>
         <Label
             text="{i18n>ttlMaterialDescription}" />
         <TextArea
